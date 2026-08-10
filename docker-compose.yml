@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      GITHUB_USERNAME: ${GITHUB_USERNAME:-lee14k}
+      CONTRIBUTION_YEARS: ${CONTRIBUTION_YEARS:-5}
+      PORT: 8000

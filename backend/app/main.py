@@ -1,0 +1,68 @@
+from __future__ import annotations
+
+import os
+import time
+from pathlib import Path
+
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+from .cache import read_cache, write_cache
+from .github import fetch_contributions
+
+app = FastAPI(title="lee14k portfolio API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["GET"],
+    allow_headers=["*"],
+)
+
+STATIC_DIR = Path(os.environ.get("STATIC_DIR", Path(__file__).resolve().parents[2] / "frontend" / "dist"))
+
+
+@app.get("/api/health")
+async def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+
+@app.get("/api/contributions")
+async def contributions() -> dict:
+    cached = read_cache()
+    if cached is not None:
+        return cached
+
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    login = os.environ.get("GITHUB_USERNAME", "lee14k").strip() or "lee14k"
+    years = int(os.environ.get("CONTRIBUTION_YEARS", "5"))
+
+    if not token:
+        raise HTTPException(
+            status_code=503,
+            detail="GITHUB_TOKEN is not configured",
+        )
+
+    try:
+        data = await fetch_contributions(token=token, login=login, years=years)
+    except Exception as exc:  # noqa: BLE001 — surface as API error for v1
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
+
+    payload = {**data, "syncedAt": int(time.time())}
+    write_cache(payload)
+    return payload
+
+
+if STATIC_DIR.exists():
+    assets_dir = STATIC_DIR / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def spa(full_path: str) -> FileResponse:
+        candidate = STATIC_DIR / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(candidate)
+        return FileResponse(STATIC_DIR / "index.html")

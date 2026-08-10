@@ -1,0 +1,38 @@
+.footer {
+  background: var(--pink);
+  color: var(--white);
+  padding: 2rem 0;
+  border-top: 2px solid var(--ink);
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.muted {
+  opacity: 0.85;
+  margin-top: 0.25rem !important;
+}
+
+.links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.links a:hover {
+  text-decoration: underline;
+}
