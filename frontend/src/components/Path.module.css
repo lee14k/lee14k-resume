@@ -1,16 +1,19 @@
 .header {
   display: flex;
   justify-content: space-between;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: end;
-  margin-bottom: var(--space-md);
+  margin-bottom: 0.5rem;
 }
 
 .sticker {
-  width: min(180px, 36vw);
+  width: min(150px, 30vw);
   height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(0 10px 0 rgba(26, 31, 22, 0.06));
+}
+
+.section {
+  border-top: 1px solid var(--line);
 }
 
 .list {
@@ -21,18 +24,11 @@
   gap: 0;
 }
 
-@media (max-width: 640px) {
-  .header {
-    flex-direction: column;
-    align-items: start;
-  }
-}
-
 .item {
   display: grid;
-  grid-template-columns: 10rem 1fr;
-  gap: 1.5rem;
-  padding: 1.4rem 0;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 1.5rem 2rem;
+  padding: 1.85rem 0;
   border-top: 1px solid var(--line);
 }
 
@@ -42,30 +38,32 @@
 
 .meta {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.5rem;
   align-content: start;
+  padding-top: 0.15rem;
 }
 
 .meta time {
   font-variant-numeric: tabular-nums;
   color: var(--ink-muted);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .kind {
   display: inline-flex;
   width: fit-content;
-  padding: 0.15rem 0.45rem;
-  background: var(--lime);
-  border: 1px solid var(--ink);
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  font-weight: 600;
 }
 
 .item h3 {
-  margin: 0 0 0.4rem;
-  font-size: 1.2rem;
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .item h3 a {
@@ -75,29 +73,53 @@
 
 .item h3 a:hover {
   color: var(--pink);
-  text-decoration: underline;
 }
 
 .org {
+  font-family: var(--font-body);
   font-weight: 500;
   color: var(--ink-muted);
+  font-size: 0.95rem;
 }
 
 .item p {
   margin: 0;
   color: var(--ink-muted);
+  max-width: 44rem;
 }
 
 .badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.15rem 0.65rem;
   margin-top: 0.75rem;
 }
 
 @media (max-width: 720px) {
+  .header {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .sticker {
+    width: 110px;
+  }
+
   .item {
     grid-template-columns: 1fr;
-    gap: 0.65rem;
+    gap: 0.55rem;
+    padding: 1.4rem 0;
+  }
+
+  .item h3 {
+    font-size: 1.15rem;
+    overflow-wrap: anywhere;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 0.85rem;
   }
 }

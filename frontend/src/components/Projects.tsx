@@ -1,28 +1,31 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { stickers } from "../assets/stickers";
 import { projects } from "../content/projects";
 import styles from "./Projects.module.css";
 
-export function Projects() {
-  const tags = useMemo(() => {
-    const set = new Set<string>();
-    projects.forEach((p) => p.tags.forEach((t) => set.add(t)));
-    return ["All", ...Array.from(set).sort()];
-  }, []);
+const filters = [
+  { id: "all", label: "All" },
+  { id: "work", label: "Work" },
+  { id: "side", label: "Side" },
+] as const;
 
-  const [active, setActive] = useState("All");
+type FilterId = (typeof filters)[number]["id"];
+
+export function Projects() {
+  const [active, setActive] = useState<FilterId>("all");
   const visible =
-    active === "All" ? projects : projects.filter((p) => p.tags.includes(active));
+    active === "all" ? projects : projects.filter((p) => p.kind === active);
 
   return (
-    <section className="section" id="work">
+    <section className={`section ${styles.section}`} id="work">
       <div className="wrap">
         <div className={styles.header}>
           <div>
             <p className="section__eyebrow">Projects · selected</p>
             <h2 className="section__title">Portals, packs, and production systems.</h2>
             <p className="section__lede">
-              Multi-tenant insurance, mobile products, enterprise scheduling, and a Pokémon scanning side quest.
+              Multi-tenant insurance, mobile products, enterprise scheduling, and a Pokémon scanning
+              side quest.
             </p>
           </div>
           <img
@@ -30,49 +33,51 @@ export function Projects() {
             src={stickers.computer}
             alt=""
             aria-hidden="true"
-            width={160}
-            height={158}
+            width={140}
+            height={138}
           />
         </div>
 
         <div className={styles.filters} role="tablist" aria-label="Filter projects">
-          {tags.map((tag) => (
+          {filters.map((filter) => (
             <button
-              key={tag}
+              key={filter.id}
               type="button"
               role="tab"
-              aria-selected={active === tag}
-              className={active === tag ? styles.filterActive : styles.filter}
-              onClick={() => setActive(tag)}
+              aria-selected={active === filter.id}
+              className={active === filter.id ? styles.filterActive : styles.filter}
+              onClick={() => setActive(filter.id)}
             >
-              {tag}
+              {filter.label}
             </button>
           ))}
         </div>
 
-        <div className={styles.grid}>
+        <div className={styles.list}>
           {visible.map((project) => (
-            <article key={project.id} id={`project-${project.id}`} className={styles.card}>
-              <div className={styles.cardTop}>
-                {project.year ? <span>{project.year}</span> : <span />}
+            <article key={project.id} id={`project-${project.id}`} className={styles.item}>
+              <div className={styles.meta}>
+                {project.year ? <span>{project.year}</span> : null}
                 {project.featured ? <span className={styles.featured}>Featured</span> : null}
               </div>
-              <h3>
-                {project.href ? (
-                  <a href={project.href} target="_blank" rel="noreferrer">
-                    {project.title} ↗
-                  </a>
-                ) : (
-                  project.title
-                )}
-              </h3>
-              <p>{project.summary}</p>
-              <div className={styles.tags}>
-                {project.tags.map((tag) => (
-                  <span className="badge" key={tag}>
-                    {tag}
-                  </span>
-                ))}
+              <div className={styles.body}>
+                <h3>
+                  {project.href ? (
+                    <a href={project.href} target="_blank" rel="noreferrer">
+                      {project.title} ↗
+                    </a>
+                  ) : (
+                    project.title
+                  )}
+                </h3>
+                <p>{project.summary}</p>
+                <div className={styles.tags}>
+                  {project.tags.map((tag) => (
+                    <span className="badge" key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </article>
           ))}

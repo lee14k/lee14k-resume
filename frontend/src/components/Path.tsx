@@ -10,7 +10,7 @@ function formatRange(start: string, end?: string) {
 
 export function Path() {
   return (
-    <section className="section" id="path">
+    <section className={`section ${styles.section}`} id="path">
       <div className="wrap">
         <div className={styles.header}>
           <div>

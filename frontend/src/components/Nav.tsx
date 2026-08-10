@@ -3,8 +3,8 @@ import styles from "./Nav.module.css";
 
 const links = [
   { href: "#about", label: "About" },
-  { href: "#work", label: "Work" },
   { href: "#path", label: "Path" },
+  { href: "#work", label: "Work" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -19,7 +19,9 @@ export function Nav() {
           {profile.name.toUpperCase()}
         </a>
         <div className={styles.sideRight}>
-          <a href="#contact">Contact</a>
+          <a className={styles.desktopOnly} href="#contact">
+            Contact
+          </a>
           <a className={styles.resume} href={profile.resumeHref} download>
             Resume ↓
           </a>

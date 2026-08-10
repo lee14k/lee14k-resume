@@ -19,10 +19,10 @@ export default function App() {
         <Hero />
         <Lenses />
         <CommitGraph />
-        <Marquee text="WORK WORK WORK" tone="lime" />
-        <Projects />
         <Path />
-        <Marquee text="CONTACT KAILEE" tone="white" />
+        <Marquee text="WORK · PROJECTS · WORK · PROJECTS" tone="lime" />
+        <Projects />
+        <Marquee text="CONTACT KAILEE · CONTACT KAILEE" tone="white" />
         <Contact />
       </main>
       <Footer />
