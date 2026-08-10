@@ -1,4 +1,4 @@
-export type PathKind = "role" | "education" | "project" | "pivot" | "other";
+export type PathKind = "role" | "education" | "project" | "pivot" | "research";
 
 export type PathEntry = {
   id: string;
@@ -49,7 +49,7 @@ export const pathEntries: PathEntry[] = [
   },
   {
     id: "dilab",
-    kind: "other",
+    kind: "research",
     start: "2026",
     end: "present",
     title: "Research involvement",
