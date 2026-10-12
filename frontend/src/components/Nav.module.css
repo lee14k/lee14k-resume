@@ -94,7 +94,8 @@
     justify-self: start;
   }
 
-  .desktopOnly {
+  /* Must out-rank `.sideRight a`, which sets display: inline-flex. */
+  .sideRight .desktopOnly {
     display: none;
   }
 
