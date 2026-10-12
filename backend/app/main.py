@@ -4,12 +4,13 @@ import os
 import time
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from .cache import read_cache, write_cache
+from .contact import ContactMessage, ContactNotConfigured, is_rate_limited, send_contact_email
 from .github import fetch_contributions
 
 app = FastAPI(title="lee14k portfolio API")
@@ -53,6 +54,27 @@ async def contributions() -> dict:
     payload = {**data, "syncedAt": int(time.time())}
     write_cache(payload)
     return payload
+
+
+@app.post("/api/contact")
+async def contact(msg: ContactMessage, request: Request) -> dict[str, str]:
+    if msg.company:
+        return {"status": "sent"}
+
+    # Railway's proxy puts the real client first in X-Forwarded-For.
+    forwarded = request.headers.get("x-forwarded-for", "")
+    ip = forwarded.split(",")[0].strip() or (request.client.host if request.client else "unknown")
+    if is_rate_limited(ip):
+        raise HTTPException(status_code=429, detail="Too many messages. Try again later.")
+
+    try:
+        await send_contact_email(msg)
+    except ContactNotConfigured as exc:
+        raise HTTPException(status_code=503, detail="Contact form is not configured") from exc
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail="Could not send message") from exc
+
+    return {"status": "sent"}
 
 
 if STATIC_DIR.exists():

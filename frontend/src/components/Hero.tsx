@@ -1,6 +1,5 @@
 import { stickers } from "../assets/stickers";
 import { profile } from "../content/profile";
-import { projects } from "../content/projects";
 import styles from "./Hero.module.css";
 
 const colorClass = {
@@ -10,8 +9,6 @@ const colorClass = {
 } as const;
 
 export function Hero() {
-  const featured = projects.filter((p) => profile.featuredProjectIds.includes(p.id));
-
   return (
     <section className={styles.hero} id="top">
       <div className={`wrap ${styles.grid}`}>
@@ -57,13 +54,6 @@ export function Hero() {
             width={280}
             height={386}
           />
-          <div className={styles.chips}>
-            {featured.map((project) => (
-              <a key={project.id} className={styles.chip} href={`#project-${project.id}`}>
-                {project.title}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </section>

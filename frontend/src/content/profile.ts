@@ -28,5 +28,4 @@ export const profile = {
     { value: "MLS→SE", label: "Career pivot" },
     { value: "1", label: "Published paper" },
   ],
-  featuredProjectIds: ["pokemon-scanner", "clever-benefits", "visible"],
 };

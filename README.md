@@ -24,8 +24,17 @@ pip install -r requirements.txt
 export GITHUB_TOKEN=ghp_xxx   # classic or fine-grained with read access
 export GITHUB_USERNAME=lee14k
 export CONTRIBUTION_YEARS=5
+export RESEND_API_KEY=re_xxxxxxxxx           # contact form
+export CONTACT_TO_EMAIL=khamre3@gatech.edu
+export CONTACT_FROM_EMAIL=onboarding@resend.dev
 uvicorn app.main:app --reload --port 8000
 ```
+
+### Contact form
+
+`POST /api/contact` emails submissions to `CONTACT_TO_EMAIL` via [Resend](https://resend.com), with reply-to set to the visitor. It has a honeypot field and a 5-messages-per-hour-per-IP limit, and returns 503 until all three `RESEND_*`/`CONTACT_*` variables are set.
+
+`onboarding@resend.dev` only delivers to the email on your Resend account. To send from your own address, verify a domain in Resend and change `CONTACT_FROM_EMAIL`.
 
 Or from repo root with the package path:
 
@@ -51,11 +60,11 @@ Resume PDF: `frontend/public/Kailee_Hamre_Resume.pdf`
 ## Railway deploy
 
 1. Create a Railway project from this repo.
-2. Set variables: `GITHUB_TOKEN`, `GITHUB_USERNAME=lee14k`, `CONTRIBUTION_YEARS=5`.
+2. Set variables: `GITHUB_TOKEN`, `GITHUB_USERNAME=lee14k`, `CONTRIBUTION_YEARS=5`, `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`.
 3. Deploy the root `Dockerfile` (see `railway.toml`).
 4. Health check: `/api/health`.
 
-Single service serves the Vite build and `/api/contributions`.
+Single service serves the Vite build, `/api/contributions`, and `/api/contact`.
 
 ## GitHub Pages fallback (later)
 

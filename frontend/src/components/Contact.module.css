@@ -58,6 +58,27 @@
   overflow-wrap: anywhere;
 }
 
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.success {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  line-height: 1.25;
+  color: var(--ink);
+}
+
 .note a {
   color: var(--pink);
   text-decoration: none;

@@ -93,41 +93,11 @@
 .visual {
   display: grid;
   justify-items: center;
-  gap: 1.5rem;
 }
 
 .sticker {
   width: min(100%, 280px);
   height: auto;
-}
-
-.chips {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.45rem;
-  width: min(100%, 280px);
-}
-
-.chip {
-  text-decoration: none;
-  color: var(--ink-muted);
-  font-size: 0.9rem;
-  border-bottom: 1px solid transparent;
-  min-height: 2rem;
-  display: inline-flex;
-  align-items: center;
-  touch-action: manipulation;
-}
-
-.chip:hover {
-  color: var(--pink);
-  border-bottom-color: var(--pink);
-}
-
-.chip::before {
-  content: "→ ";
-  color: var(--lime-deep);
 }
 
 @media (max-width: 860px) {
@@ -147,10 +117,6 @@
 
   .sticker {
     width: min(42vw, 180px);
-  }
-
-  .chips {
-    width: auto;
   }
 
   .actions {
