@@ -1,6 +1,7 @@
 import { stickers } from "../assets/stickers";
 import { pathEntries } from "../content/path";
 import styles from "./Path.module.css";
+import { Sticker } from "./Sticker";
 
 function formatRange(start: string, end?: string) {
   const pretty = (value: string) =>
@@ -20,13 +21,13 @@ export function Path() {
               A flexible timeline — employment, education, and pivots as first-class entries.
             </p>
           </div>
-          <img
+          <Sticker
             className={styles.sticker}
             src={stickers.globe}
-            alt=""
-            aria-hidden="true"
             width={180}
-            height={180}
+            height={192}
+            tilt={-5}
+            dot="teal"
           />
         </div>
         <ol className={styles.list}>
@@ -34,7 +35,9 @@ export function Path() {
             <li key={entry.id} className={styles.item}>
               <div className={styles.meta}>
                 <time>{formatRange(entry.start, entry.end)}</time>
-                <span className={styles.kind}>{entry.kind}</span>
+                <span className={styles.kind} data-kind={entry.kind}>
+                  {entry.kind}
+                </span>
               </div>
               <div>
                 <h3>

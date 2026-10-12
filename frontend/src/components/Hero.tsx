@@ -1,12 +1,25 @@
+import type { CSSProperties, MouseEvent } from "react";
 import { stickers } from "../assets/stickers";
 import { profile } from "../content/profile";
 import styles from "./Hero.module.css";
+import { Sticker } from "./Sticker";
 
 const colorClass = {
   pink: styles.pink,
   teal: styles.teal,
   orange: styles.orange,
 } as const;
+
+/** Tap the headline to run the print-in again (no-op under reduced motion: no animations exist). */
+function reprint(event: MouseEvent<HTMLHeadingElement>) {
+  const heading = event.currentTarget;
+  for (const animation of heading.getAnimations({ subtree: true })) {
+    if (animation.effect instanceof KeyframeEffect && animation.effect.target !== heading) {
+      animation.currentTime = 0;
+      animation.play();
+    }
+  }
+}
 
 export function Hero() {
   return (
@@ -19,10 +32,15 @@ export function Hero() {
           <p className={`${styles.intro} fade-up fade-up-delay-1`}>
             Hi, I&apos;m {profile.shortName}, and I&apos;m a
           </p>
-          <h1 className={`${styles.roles} fade-up fade-up-delay-2`}>
-            {profile.roles.map((role) => (
-              <span key={role.label} className={colorClass[role.color]}>
-                {role.label}
+          <h1 className={`${styles.roles} fade-up fade-up-delay-2`} onClick={reprint}>
+            {profile.roles.map((role, i) => (
+              <span
+                key={role.label}
+                className={`${styles.role} ${colorClass[role.color]}`}
+                data-text={role.label}
+                style={{ "--n": i } as CSSProperties}
+              >
+                <span className={styles.ink}>{role.label}</span>
               </span>
             ))}
           </h1>
@@ -46,13 +64,13 @@ export function Hero() {
           </dl>
         </div>
         <div className={styles.visual}>
-          <img
+          <Sticker
             className={styles.sticker}
             src={stickers.kaileeThumbs}
-            alt=""
-            aria-hidden="true"
             width={280}
-            height={386}
+            height={406}
+            tilt={-3}
+            dot="lime"
           />
         </div>
       </div>

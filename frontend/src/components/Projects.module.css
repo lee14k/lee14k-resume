@@ -11,8 +11,6 @@
 
 .sticker {
   width: 130px;
-  height: auto;
-  flex-shrink: 0;
 }
 
 .filters {
@@ -68,12 +66,22 @@
   padding-top: 0.2rem;
 }
 
+/* Small orange sticker with a white die-cut edge. */
 .featured {
-  color: var(--orange);
+  width: fit-content;
+  padding: 0.28rem 0.6rem 0.24rem;
+  border-radius: 999px;
+  background: var(--orange);
+  color: var(--white);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   font-size: 0.7rem;
+  line-height: 1.2;
+  transform: rotate(-6deg);
+  box-shadow:
+    0 0 0 2.5px var(--white),
+    0 3px 6px rgba(26, 31, 22, 0.18);
 }
 
 .body {

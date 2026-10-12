@@ -1,6 +1,7 @@
 import { stickers } from "../assets/stickers";
 import { lenses } from "../content/lenses";
 import styles from "./Lenses.module.css";
+import { Sticker } from "./Sticker";
 
 export function Lenses() {
   return (
@@ -14,13 +15,13 @@ export function Lenses() {
               Not a founder/exit scoreboard — a path through labs, products, and platforms.
             </p>
           </div>
-          <img
+          <Sticker
             className={styles.sticker}
             src={stickers.kitty}
-            alt=""
-            aria-hidden="true"
             width={180}
-            height={151}
+            height={158}
+            tilt={6}
+            dot="pink"
           />
         </div>
         <ol className={styles.list}>

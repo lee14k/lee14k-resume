@@ -20,9 +20,9 @@ export default function App() {
         <Lenses />
         <CommitGraph />
         <Path />
-        <Marquee text="WORK · PROJECTS · WORK · PROJECTS" tone="lime" />
+        <Marquee text="WORK · PROJECTS · WORK · PROJECTS" tone="pinkLime" />
         <Projects />
-        <Marquee text="CONTACT KAILEE · CONTACT KAILEE" tone="white" />
+        <Marquee text="CONTACT KAILEE · CONTACT KAILEE" tone="orangeTeal" />
         <Contact />
       </main>
       <Footer />

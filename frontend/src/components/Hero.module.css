@@ -33,18 +33,72 @@
   font-weight: 650;
   letter-spacing: -0.02em;
   overflow-wrap: anywhere;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Each role prints in two inks: the solid word, then a halftone copy in the
+   next palette color that slides into near-register behind it. The copy is
+   generated content with empty alt text, so the heading's text and accessible
+   name still contain each role once. */
+.role {
+  position: relative;
+  isolation: isolate;
+}
+
+.ink {
+  display: inline-block;
+  transform-origin: 0 60%;
+  animation: ink-down 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  animation-delay: calc(var(--n) * 130ms + 120ms);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .role::after {
+    content: attr(data-text);
+    content: attr(data-text) / "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    color: transparent;
+    background: radial-gradient(circle at 50% 50%, var(--ink-2) 40%, transparent 45%) 0 0 /
+      0.085em 0.085em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transform: translate(0.075em, 0.07em);
+    pointer-events: none;
+    animation: register 0.95s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+    animation-delay: calc(var(--n) * 130ms + 250ms);
+  }
+}
+
+@keyframes ink-down {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes register {
+  from {
+    opacity: 0;
+    transform: translate(-0.4em, 0.25em);
+  }
 }
 
 .pink {
   color: var(--pink);
+  --ink-2: var(--teal);
 }
 
 .teal {
   color: var(--teal);
+  --ink-2: var(--orange);
 }
 
 .orange {
   color: var(--orange);
+  --ink-2: var(--pink);
 }
 
 .specialty {
@@ -97,7 +151,6 @@
 
 .sticker {
   width: min(100%, 280px);
-  height: auto;
 }
 
 @media (max-width: 860px) {

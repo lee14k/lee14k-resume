@@ -8,8 +8,6 @@
 
 .sticker {
   width: min(150px, 30vw);
-  height: auto;
-  flex-shrink: 0;
 }
 
 .section {
@@ -49,14 +47,54 @@
   font-size: 0.9rem;
 }
 
+/* Torn tape strip, one color per kind. */
 .kind {
   display: inline-flex;
   width: fit-content;
+  padding: 0.22rem 0.7rem 0.18rem;
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--teal);
-  font-weight: 600;
+  letter-spacing: 0.07em;
+  color: var(--ink);
+  font-weight: 700;
+  background: var(--tape, var(--pink-soft));
+  transform: rotate(-2.5deg);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    calc(100% - 4px) 25%,
+    100% 50%,
+    calc(100% - 4px) 75%,
+    100% 100%,
+    0 100%,
+    4px 75%,
+    0 50%,
+    4px 25%
+  );
+}
+
+.item:nth-child(even) .kind {
+  transform: rotate(2deg);
+}
+
+.kind[data-kind="role"] {
+  --tape: #ffc6e1;
+}
+
+.kind[data-kind="education"] {
+  --tape: #b9ece7;
+}
+
+.kind[data-kind="research"] {
+  --tape: var(--lime);
+}
+
+.kind[data-kind="project"] {
+  --tape: #e7f6c7;
+}
+
+.kind[data-kind="pivot"] {
+  --tape: #ffd0ad;
 }
 
 .item h3 {

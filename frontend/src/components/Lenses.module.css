@@ -19,8 +19,6 @@
 
 .sticker {
   width: min(160px, 28vw);
-  height: auto;
-  flex-shrink: 0;
 }
 
 .list {

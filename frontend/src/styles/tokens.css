@@ -131,8 +131,17 @@ textarea {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 140ms cubic-bezier(0.3, 1.6, 0.5, 1);
   touch-action: manipulation;
+}
+
+/* Pressed-down feel on tap and click. */
+.btn:active:not(:disabled) {
+  transform: translateY(2px) scale(0.97);
 }
 
 .btn:hover {

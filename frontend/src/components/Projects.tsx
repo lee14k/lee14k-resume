@@ -2,6 +2,7 @@ import { useState } from "react";
 import { stickers } from "../assets/stickers";
 import { projects } from "../content/projects";
 import styles from "./Projects.module.css";
+import { Sticker } from "./Sticker";
 
 const filters = [
   { id: "all", label: "All" },
@@ -28,13 +29,13 @@ export function Projects() {
               side quest.
             </p>
           </div>
-          <img
+          <Sticker
             className={styles.sticker}
             src={stickers.computer}
-            alt=""
-            aria-hidden="true"
             width={140}
-            height={138}
+            height={146}
+            tilt={4}
+            dot="orange"
           />
         </div>
 

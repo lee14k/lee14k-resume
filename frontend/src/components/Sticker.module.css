@@ -1,0 +1,80 @@
+.sticker {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  isolation: isolate;
+}
+
+/* Halftone dot patch printed behind the sticker. Static. */
+.sticker::before {
+  content: "";
+  position: absolute;
+  inset: -14% -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--dot) 30%, transparent 34%) 0 0 / 9px 9px;
+  -webkit-mask: radial-gradient(closest-side, #000 35%, transparent 100%);
+  mask: radial-gradient(closest-side, #000 35%, transparent 100%);
+}
+
+.pink {
+  --dot: var(--pink);
+}
+
+.teal {
+  --dot: var(--teal);
+}
+
+.orange {
+  --dot: var(--orange);
+}
+
+.lime {
+  --dot: var(--lime-deep);
+}
+
+/* The die-cut border and shadow are baked into the image, so no filter here. */
+.img {
+  width: 100%;
+  height: auto;
+  transform: rotate(var(--tilt));
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Confetti that pops out from behind the sticker on tap. */
+.bit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: 10px;
+  height: 10px;
+  margin: -5px;
+  border-radius: 2px;
+  background: var(--dot);
+  pointer-events: none;
+  animation: fly 0.75s cubic-bezier(0.15, 0.7, 0.3, 1) forwards;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+@keyframes fly {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.4);
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--spin)) scale(1);
+  }
+}
